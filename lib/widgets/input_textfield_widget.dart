@@ -15,6 +15,9 @@ class InputTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      style: TextStyle(
+        color: Colors.white,
+      ),
       maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hintText,

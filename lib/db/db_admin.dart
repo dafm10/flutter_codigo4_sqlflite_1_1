@@ -11,12 +11,14 @@ class DBAdmin {
 
   DBAdmin._();
 
+  // verificar la BD
   Future<Database?> getDatabase() async {
     if (_myDatabase != null) return _myDatabase;
     _myDatabase = await initDB();
     return _myDatabase;
   }
 
+  // verificar donde se instaló el App e instalamos la BD
   Future<Database> initDB() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentDirectory.path, "BookDB.db");

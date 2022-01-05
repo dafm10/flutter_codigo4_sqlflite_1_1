@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         return AlertDialog(
           contentPadding: EdgeInsets.zero,
           titlePadding: EdgeInsets.zero,
-          insetPadding: EdgeInsets.zero,
+          //insetPadding: EdgeInsets.zero,
           buttonPadding: EdgeInsets.zero,
           actionsPadding: EdgeInsets.zero,
           backgroundColor: Color(0xff14213d),
@@ -114,10 +114,25 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     onPressed: () {
-                      print(_titleController.text);
-                      print(_authorController.text);
-                      print(_descriptionController.text);
-                      print(_imageController.text);
+
+                      Book book = Book(
+                        title: _titleController.text,
+                        author: _authorController.text,
+                        description: _descriptionController.text,
+                        image: _imageController.text,
+                        favourite: "false",
+                      );
+
+                      DBAdmin.db.insertBook(book).then((value){
+                        setState(() {
+
+                        });
+                        _titleController.clear();
+                        _authorController.clear();
+                        _descriptionController.clear();
+                        _imageController.clear();
+                        Navigator.pop(context);
+                      });
                     },
                     child: Text(
                       "Agregar",
@@ -240,7 +255,8 @@ class _HomePageState extends State<HomePage> {
                                   title: books[index].title,
                                   author: books[index].author,
                                   description: books[index].description,
-                                  image: books[index].image);
+                                  image: books[index].image
+                              );
                             },
                           );
                         }

@@ -101,7 +101,9 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.white70,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                   const SizedBox(
                     width: 10.0,

@@ -16,6 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _authorController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _imageController = TextEditingController();
+
   showAddBookForm() {
     showDialog(
       context: context,
@@ -49,6 +55,7 @@ class _HomePageState extends State<HomePage> {
                     height: 16.0,
                   ),
                   InputTextFieldWidget(
+                    controller: _titleController,
                     icon: "title",
                     hintText: "Titulo",
                   ),
@@ -56,6 +63,7 @@ class _HomePageState extends State<HomePage> {
                     height: 16.0,
                   ),
                   InputTextFieldWidget(
+                    controller: _authorController,
                     icon: "author",
                     hintText: "Autor",
                   ),
@@ -63,6 +71,7 @@ class _HomePageState extends State<HomePage> {
                     height: 16.0,
                   ),
                   InputTextFieldWidget(
+                    controller: _descriptionController,
                     icon: "description",
                     hintText: "Descripción",
                     maxLines: 3,
@@ -71,6 +80,7 @@ class _HomePageState extends State<HomePage> {
                     height: 16.0,
                   ),
                   InputTextFieldWidget(
+                    controller: _imageController,
                     icon: "image",
                     hintText: "Imagen",
                   ),
@@ -103,7 +113,12 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      print(_titleController.text);
+                      print(_authorController.text);
+                      print(_descriptionController.text);
+                      print(_imageController.text);
+                    },
                     child: Text(
                       "Agregar",
                     ),

@@ -7,12 +7,14 @@ class InputTextFieldWidget extends StatelessWidget {
   String hintText;
   String icon;
   int? maxLines;
+  TextEditingController controller;
 
-  InputTextFieldWidget({required this.hintText, required this.icon, this.maxLines});
+  InputTextFieldWidget({required this.controller, required this.hintText, required this.icon, this.maxLines});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hintText,

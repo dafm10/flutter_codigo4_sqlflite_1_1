@@ -32,48 +32,50 @@ class _HomePageState extends State<HomePage> {
           ),
           content: Padding(
             padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Agregar Libro",
-                  style: GoogleFonts.comfortaa(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 14.0,
-                    color: Colors.white,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Agregar Libro",
+                    style: GoogleFonts.comfortaa(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 14.0,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                InputTextFieldWidget(
-                  icon: "title",
-                  hintText: "Titulo",
-                ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                InputTextFieldWidget(
-                  icon: "author",
-                  hintText: "Autor",
-                ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                InputTextFieldWidget(
-                  icon: "description",
-                  hintText: "Descripción",
-                  maxLines: 3,
-                ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                InputTextFieldWidget(
-                  icon: "image",
-                  hintText: "Imagen",
-                ),
-              ],
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  InputTextFieldWidget(
+                    icon: "title",
+                    hintText: "Titulo",
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  InputTextFieldWidget(
+                    icon: "author",
+                    hintText: "Autor",
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  InputTextFieldWidget(
+                    icon: "description",
+                    hintText: "Descripción",
+                    maxLines: 3,
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  InputTextFieldWidget(
+                    icon: "image",
+                    hintText: "Imagen",
+                  ),
+                ],
+              ),
             ),
           ),
           actions: [

@@ -76,4 +76,17 @@ class DBAdmin {
     return res;
   }
 
+  // Actualizar
+  Future<int> updateBookRaw(int id) async {
+    final db = await getDatabase();
+    int res = await db!.rawUpdate("UPDATE BOOK SET title = 'asdasd', author = 'DFSDF' WHERE id = $id");
+    return res;
+  }
+
+  Future<int>updateBook(Book book) async {
+    final db = await getDatabase();
+    int res = await db!.update("BOOK", book.toJson(), where: "id = ${book.id}");
+    return res;
+  }
+
 }

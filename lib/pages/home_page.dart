@@ -20,6 +20,8 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _imageController = TextEditingController();
 
+  int idBook = 0;
+
   showAddBookForm(bool type) {
     showDialog(
       context: context,
@@ -41,7 +43,8 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(type ? "Agregar Libro" : "Editar Libro",
+                  Text(
+                    type ? "Agregar Libro" : "Editar Libro",
                     style: GoogleFonts.comfortaa(
                       fontWeight: FontWeight.w800,
                       fontSize: 14.0,
@@ -121,16 +124,29 @@ class _HomePageState extends State<HomePage> {
                         favourite: "false",
                       );
 
-                      DBAdmin.db.insertBook(book).then((value) {
-                        setState(() {});
-                        _titleController.clear();
-                        _authorController.clear();
-                        _descriptionController.clear();
-                        _imageController.clear();
-                        Navigator.pop(context);
-                      });
+                      if (type) {
+                        DBAdmin.db.insertBook(book).then((value) {
+                          setState(() {});
+                          _titleController.clear();
+                          _authorController.clear();
+                          _descriptionController.clear();
+                          _imageController.clear();
+                          Navigator.pop(context);
+                        });
+                      } else {
+                        book.id = idBook;
+                        DBAdmin.db.updateBook(book).then((value) {
+                          setState(() {});
+                          _titleController.clear();
+                          _authorController.clear();
+                          _descriptionController.clear();
+                          _imageController.clear();
+                          Navigator.pop(context);
+                        });
+                      }
                     },
-                    child: Text(type ? "Agregar" : "Editar",
+                    child: Text(
+                      type ? "Agregar" : "Editar",
                     ),
                   ),
                 ],
@@ -152,7 +168,8 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(30.0),
             ),
             content: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
               child: Text(
                 "¿Deseas eliminar este libro?",
                 style: GoogleFonts.comfortaa(
@@ -188,10 +205,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       onPressed: () {
-                        DBAdmin.db.deleteBook(id).then((value){
-                          setState(() {
-
-                          });
+                        DBAdmin.db.deleteBook(id).then((value) {
+                          setState(() {});
                           Navigator.pop(context);
                         });
                       },
@@ -316,19 +331,21 @@ class _HomePageState extends State<HomePage> {
                             physics: ScrollPhysics(),
                             itemBuilder: (context, index) {
                               return ItemBookListWidget(
-                                  title: books[index].title,
-                                  author: books[index].author,
-                                  description: books[index].description,
-                                  image: books[index].image,
-                                  onDeleted: (){
-                                    showDeleteBook(books[index].id!);
-                                  },
-                                onUpdate: (){
-                                    showAddBookForm(false);
-                                    _titleController.text = books[index].title;
-                                    _authorController.text = books[index].author;
-                                    _descriptionController.text = books[index].description;
-                                    _imageController.text = books[index].image;
+                                title: books[index].title,
+                                author: books[index].author,
+                                description: books[index].description,
+                                image: books[index].image,
+                                onDeleted: () {
+                                  showDeleteBook(books[index].id!);
+                                },
+                                onUpdate: () {
+                                  idBook = books[index].id!;
+                                  showAddBookForm(false);
+                                  _titleController.text = books[index].title;
+                                  _authorController.text = books[index].author;
+                                  _descriptionController.text =
+                                      books[index].description;
+                                  _imageController.text = books[index].image;
                                 },
                               );
                             },

@@ -5,7 +5,6 @@ import 'package:flutter_codigo4_sqflite_1/models/book.dart';
 import 'package:flutter_codigo4_sqflite_1/widgets/input_textfield_widget.dart';
 import 'package:flutter_codigo4_sqflite_1/widgets/item_book_list_widget.dart';
 import 'package:flutter_codigo4_sqflite_1/widgets/item_slider_favorite.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _imageController = TextEditingController();
 
-  showAddBookForm() {
+  showAddBookForm(bool type) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -42,8 +41,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    "Agregar Libro",
+                  Text(type ? "Agregar Libro" : "Editar Libro",
                     style: GoogleFonts.comfortaa(
                       fontWeight: FontWeight.w800,
                       fontSize: 14.0,
@@ -132,8 +130,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.pop(context);
                       });
                     },
-                    child: Text(
-                      "Agregar",
+                    child: Text(type ? "Agregar" : "Editar",
                     ),
                   ),
                 ],
@@ -145,7 +142,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  showDeleteBook() {
+  showDeleteBook(int id) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -191,10 +188,15 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       onPressed: () {
+                        DBAdmin.db.deleteBook(id).then((value){
+                          setState(() {
 
+                          });
+                          Navigator.pop(context);
+                        });
                       },
-                      child: Text(
-                        "Agregar",
+                      child: const Text(
+                        "Aceptar",
                       ),
                     ),
                   ],
@@ -225,14 +227,18 @@ class _HomePageState extends State<HomePage> {
           DBAdmin.db.insertBook(myBook);
           DBAdmin.db.getBooks();
           DBAdmin.db.getBooksRaw();*/
-          showAddBookForm();
+          _titleController.clear();
+          _authorController.clear();
+          _descriptionController.clear();
+          _imageController.clear();
+          showAddBookForm(true);
         },
         child: Icon(Icons.add),
       ),
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 gradient: LinearGradient(begin: Alignment.topCenter, colors: [
               Color(0XFF161b33),
               Color(0XFF161b33),
@@ -315,8 +321,15 @@ class _HomePageState extends State<HomePage> {
                                   description: books[index].description,
                                   image: books[index].image,
                                   onDeleted: (){
-                                    showDeleteBook();
+                                    showDeleteBook(books[index].id!);
                                   },
+                                onUpdate: (){
+                                    showAddBookForm(false);
+                                    _titleController.text = books[index].title;
+                                    _authorController.text = books[index].author;
+                                    _descriptionController.text = books[index].description;
+                                    _imageController.text = books[index].image;
+                                },
                               );
                             },
                           );

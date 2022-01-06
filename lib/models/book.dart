@@ -16,6 +16,7 @@ class Book {
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
+    id: json["id"] ?? 0,
     title: json["title"],
     author: json["author"],
     description: json["description"],

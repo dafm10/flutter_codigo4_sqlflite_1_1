@@ -9,6 +9,7 @@ class ItemBookListWidget extends StatelessWidget {
   String description;
   String image;
   Function onDeleted;
+  Function onUpdate;
 
   ItemBookListWidget({
     required this.title,
@@ -16,6 +17,7 @@ class ItemBookListWidget extends StatelessWidget {
     required this.description,
     required this.image,
     required this.onDeleted,
+    required this.onUpdate,
   });
 
   @override
@@ -73,7 +75,9 @@ class ItemBookListWidget extends StatelessWidget {
               'assets/icons/edit.svg',
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              onUpdate();
+            },
           ),
           IconButton(
             icon:

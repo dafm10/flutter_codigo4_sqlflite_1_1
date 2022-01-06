@@ -331,10 +331,12 @@ class _HomePageState extends State<HomePage> {
                             physics: ScrollPhysics(),
                             itemBuilder: (context, index) {
                               return ItemBookListWidget(
+                                id: books[index].id!,
                                 title: books[index].title,
                                 author: books[index].author,
                                 description: books[index].description,
                                 image: books[index].image,
+                                favourite: books[index].favourite,
                                 onDeleted: () {
                                   showDeleteBook(books[index].id!);
                                 },

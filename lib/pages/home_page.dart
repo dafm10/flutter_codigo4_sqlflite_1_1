@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   TextEditingController _titleController = TextEditingController();
   TextEditingController _authorController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -116,7 +115,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     onPressed: () {
-
                       Book book = Book(
                         title: _titleController.text,
                         author: _authorController.text,
@@ -125,10 +123,8 @@ class _HomePageState extends State<HomePage> {
                         favourite: "false",
                       );
 
-                      DBAdmin.db.insertBook(book).then((value){
-                        setState(() {
-
-                        });
+                      DBAdmin.db.insertBook(book).then((value) {
+                        setState(() {});
                         _titleController.clear();
                         _authorController.clear();
                         _descriptionController.clear();
@@ -147,6 +143,66 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
+  }
+
+  showDeleteBook() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Color(0xff14213d),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            content: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+              child: Text(
+                "¿Deseas eliminar este libro?",
+                style: GoogleFonts.comfortaa(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            actions: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      child: Text(
+                        "Cancelar",
+                        style: GoogleFonts.comfortaa(
+                          color: Colors.white70,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(
+                      width: 10.0,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color(0xfff72585),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      onPressed: () {
+
+                      },
+                      child: Text(
+                        "Agregar",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -189,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 12,
                     ),
                     Text(
@@ -199,7 +255,7 @@ class _HomePageState extends State<HomePage> {
                           fontSize: 14.0,
                           fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Text(
@@ -209,7 +265,7 @@ class _HomePageState extends State<HomePage> {
                           fontSize: 40.0,
                           fontWeight: FontWeight.w900),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -219,21 +275,21 @@ class _HomePageState extends State<HomePage> {
                           fontSize: 16.0,
                           fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       physics: BouncingScrollPhysics(),
                       child: Row(
-                        children: [
+                        children: const [
                           ItemSliderFavorite(),
                           ItemSliderFavorite(),
                           ItemSliderFavorite(),
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Text(
@@ -257,17 +313,20 @@ class _HomePageState extends State<HomePage> {
                                   title: books[index].title,
                                   author: books[index].author,
                                   description: books[index].description,
-                                  image: books[index].image
+                                  image: books[index].image,
+                                  onDeleted: (){
+                                    showDeleteBook();
+                                  },
                               );
                             },
                           );
                         }
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 60.0,
                     ),
                   ],

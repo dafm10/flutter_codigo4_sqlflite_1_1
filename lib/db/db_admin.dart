@@ -62,4 +62,18 @@ class DBAdmin {
     );
     return res;
   }
+
+  // Eliminar
+  Future<int>deleteBookRaw(int id) async {
+    final db = await getDatabase();
+    int res = await db!.rawDelete("DELETE FORM BOOK WHERE id = $id");
+    return res;
+  }
+
+  Future<int>deleteBook(int id) async {
+    final db = await getDatabase();
+    int res = await db!.delete("BOOK", where: "id = $id");
+    return res;
+  }
+
 }

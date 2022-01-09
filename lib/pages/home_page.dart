@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo4_sqflite_1/db/db_admin.dart';
@@ -21,6 +22,14 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _imageController = TextEditingController();
 
   int idBook = 0;
+
+  @override
+  initState() {
+    super.initState();
+    setState(() {
+      DBAdmin.db.getBooksFavourites();
+    });
+  }
 
   showAddBookForm(bool type) {
     showDialog(
@@ -299,15 +308,38 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: BouncingScrollPhysics(),
-                      child: Row(
-                        children: const [
-                          ItemSliderFavorite(),
-                          ItemSliderFavorite(),
-                          ItemSliderFavorite(),
-                        ],
+                    Container(
+                      height: 250.0,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: BouncingScrollPhysics(),
+                        child: Row(
+                          children: [
+                            FutureBuilder(
+                              future: DBAdmin.db.getBooks(),
+                              builder: (BuildContext context, AsyncSnapshot snap){
+                                List<Book> bookFavourite = snap.data;
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: bookFavourite.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index){
+                                    if (bookFavourite[index].favourite == "true" ) {
+                                      return ItemSliderFavorite(
+                                        title: bookFavourite[index].title,
+                                        author: bookFavourite[index].author,
+                                        image: bookFavourite[index].image,
+                                        //favourite: bookFavourite[index].favourite,
+                                      );
+                                    }
+                                    return SizedBox(height: 250.0);
+                                  },
+                                );
+                              },
+
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -348,6 +380,11 @@ class _HomePageState extends State<HomePage> {
                                   _descriptionController.text =
                                       books[index].description;
                                   _imageController.text = books[index].image;
+                                },
+                                function: (){
+                                  setState(() {
+
+                                  });
                                 },
                               );
                             },

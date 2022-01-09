@@ -11,6 +11,7 @@ class ItemBookListWidget extends StatefulWidget {
   String description;
   String image;
   String favourite;
+  Function function;
   Function onDeleted;
   Function onUpdate;
 
@@ -23,6 +24,7 @@ class ItemBookListWidget extends StatefulWidget {
     required this.favourite,
     required this.onDeleted,
     required this.onUpdate,
+    required this.function,
   });
 
   @override
@@ -30,6 +32,7 @@ class ItemBookListWidget extends StatefulWidget {
 }
 
 class _ItemBookListWidgetState extends State<ItemBookListWidget> {
+
   bool isFavourite = false;
 
   @override
@@ -38,6 +41,9 @@ class _ItemBookListWidgetState extends State<ItemBookListWidget> {
     super.initState();
     // se usa widget. para usar los atributos asignados en la 1ra parte
     isFavourite = widget.favourite == "true";
+    setState(() {
+
+    });
   }
 
   @override
@@ -57,7 +63,7 @@ class _ItemBookListWidgetState extends State<ItemBookListWidget> {
                 image: NetworkImage(widget.image),
               ),
             ),
-            child: IconButton(
+            /*child: IconButton(
               icon: Container(
                 child: SvgPicture.asset(
                   "assets/icons/heart.svg",
@@ -80,7 +86,7 @@ class _ItemBookListWidgetState extends State<ItemBookListWidget> {
                 DBAdmin.db.updateBook(book);
                 setState(() {});
               },
-            ),
+            ),*/
           ),
           Expanded(
             child: Padding(
@@ -129,6 +135,33 @@ class _ItemBookListWidgetState extends State<ItemBookListWidget> {
                 SvgPicture.asset('assets/icons/trash.svg', color: Colors.white),
             onPressed: () {
               widget.onDeleted();
+            },
+          ),
+          IconButton(
+            icon: Container(
+              child: SvgPicture.asset(
+                "assets/icons/heart.svg",
+                color: isFavourite
+                    ? Color(0xfff72585)
+                    : Colors.white.withOpacity(0.8),
+                width: 36,
+              ),
+            ),
+            onPressed: () {
+              widget.function();
+              isFavourite = !isFavourite;
+              Book book = Book(
+                id: widget.id,
+                title: widget.title,
+                author: widget.author,
+                description: widget.description,
+                image: widget.image,
+                favourite: isFavourite.toString(),
+              );
+              DBAdmin.db.updateBook(book);
+              setState(() {
+                DBAdmin.db.getBooksFavourites();
+              });
             },
           ),
         ],

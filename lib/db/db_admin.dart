@@ -89,4 +89,11 @@ class DBAdmin {
     return res;
   }
 
+  Future<List<Book>> getBooksFavourites() async {
+    final db = await getDatabase();
+    List<Map<String, dynamic>> res = await db!.query("BOOK", where: "favourite = 'true'");
+    List<Book> books = res.map<Book>((item) => Book.fromJson(item)).toList();
+    return books;
+  }
+
 }

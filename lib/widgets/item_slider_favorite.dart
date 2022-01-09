@@ -1,10 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ItemSliderFavorite extends StatelessWidget {
-  const ItemSliderFavorite({
-    Key? key,
-  }) : super(key: key);
+class ItemSliderFavorite extends StatefulWidget {
+  //int id;
+  String title;
+  String author;
+  String image;
+  //String favourite;
+
+  ItemSliderFavorite({
+    //required this.id,
+    required this.title,
+    required this.author,
+    required this.image,
+    //required this.favourite,
+  });
+
+  @override
+  State<ItemSliderFavorite> createState() => _ItemSliderFavoriteState();
+}
+
+class _ItemSliderFavoriteState extends State<ItemSliderFavorite> {
+
+  bool isFavourite = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // se usa widget. para usar los atributos asignados en la 1ra parte
+    //isFavourite = widget.favourite == "true";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +47,7 @@ class ItemSliderFavorite extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18.0),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(
-                      "https://images-na.ssl-images-amazon.com/images/I/81vx-Br7niL.jpg"),
+                  image: NetworkImage(widget.image),
                 )),
           ),
           SizedBox(
@@ -31,7 +56,7 @@ class ItemSliderFavorite extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
             child: Text(
-              "The Silmarillion",
+              widget.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.comfortaa(
@@ -44,7 +69,7 @@ class ItemSliderFavorite extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
             child: Text(
-              "J.R.R. Tolkien",
+              widget.author,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.comfortaa(
